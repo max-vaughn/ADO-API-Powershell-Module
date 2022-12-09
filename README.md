@@ -6,5 +6,5 @@ Many thanks to Will Fiddes of Microsoft Azure Directory Developer Support for hi
 [Azure-AD-Support-Module GitHub project](https://github.com/ms-willfid/Azure-AD-Support-PowerShell-Module)  
 This project adopts the same structure but is tailored to the Azure DevOps APIs.
 
-#Current Status
+# Current Status of this project
 At the moment, the only thing that will work is importing the psm1 file.  The other items in this project have not been fully attached.  This status will be updated with versioning information once items are tested.
