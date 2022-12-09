@@ -1,5 +1,6 @@
 # ADO-API-Powershell-Module
-Powershell wrapper for Microsoft ADO APIs
+Powershell wrapper for some of the Microsoft Azure DevOps APIs documented at the following link:  
+[Microsoft ADO Rest API Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/graph/?view=azure-devops-rest-6.0)
 
 # Acknowlegments
 Many thanks to Will Fiddes of Microsoft Azure Directory Developer Support for his assistance in the initial structure of this module.  This module uses the project:  
