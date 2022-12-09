@@ -20,5 +20,5 @@ DO NOT USE this PowerShell module for production and do not have any dependency 
 
 Cmdlets may change at any time without notice.
 
-Best regards,
+Best regards,  
 Max Vaughn
