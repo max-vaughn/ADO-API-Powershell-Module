@@ -9,6 +9,8 @@ This project adopts the same structure but is tailored to the Azure DevOps APIs.
 
 # Current Status of this project
 At the moment, the only thing that will work is importing the psm1 file.  The other items in this project have not been fully attached.  This status will be updated with versioning information once items are tested.  
+To create a single PSM1 file from the script files, please review:  
+[AllInOnePSM1\\Readme.md](.\AllInOnePSM1\ReadMe.md)
 # Disclaimer
 
 Use this PowerShell module at your own risk. There is no support model for this PowerShell module except through this github repository. Please report any issues here... 
