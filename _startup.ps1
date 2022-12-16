@@ -1,4 +1,4 @@
-$Global:AadSupport = [hashtable]::Synchronized(@{
+<# $Global:AadSupport = [hashtable]::Synchronized(@{
     Path = $PSScriptRoot
     ClientId = "a57bfff5-9e23-439d-9993-48d76ba688ca"
     RedirectUri = "https://login.microsoftonline.com/common/oauth2/nativeclient"
@@ -398,4 +398,11 @@ function ShowEULAIfNeeded($toolName)
 }
 
 ShowEulaIfNeeded("AadSupport")
-
+#>
+$global:strPersonalToken = ""
+$global:strOrgUri = ""
+$global:strEncodedPersonalToken = ""
+$global:WikiInfo = $null
+$global:gHeaders = $null
+$global:DefaultContext = $null
+[bool]$global:debugCmdlets = $false
