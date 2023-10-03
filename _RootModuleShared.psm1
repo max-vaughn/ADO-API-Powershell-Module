@@ -25,6 +25,7 @@ Export-ModuleMember -Function Remove-Repo
 Export-ModuleMember -Function Remove-Wiki
 Export-ModuleMember -Function Set-ADOAuthHeaders
 Export-ModuleMember -Function Set-ADOGlobals
+Export-ModuleMenber -Function Update-WikiPage
 Export-ModuleMember -Function Write-DebugInfo
 Export-ModuleMember -Function Write-DebugObject
 

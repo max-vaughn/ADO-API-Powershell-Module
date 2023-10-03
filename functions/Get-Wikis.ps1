@@ -23,7 +23,7 @@ function Get-Wikis {
         #
         $requestURL = [string]::Format("{0}{1}/_apis/wiki/wikis", $baseUrl, $project)
         $dbgStr = [string]::Format("Get-Wikis -> requestUrl: {0}", $requestURL)
-        Write-DebugInfo -debugString DarkBlue $dbgStr
+        Write-DebugInfo -debugString  $dbgStr -ForegroundColor DarkBlue
     }
     else {
         #

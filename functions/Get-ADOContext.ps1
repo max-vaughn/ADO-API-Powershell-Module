@@ -71,7 +71,7 @@ function Get-ADOContext {
     param (
         [string]$pat,
         [string]$organization,
-        [string]$project,
+        [string]$project = $null,
         [string]$wikiName = $null
     )
     #
@@ -85,6 +85,11 @@ function Get-ADOContext {
     {
        $outErr = [string]::Format("Get-ADOContext - organization cannot be null.  Please provide an organization that is associated with the pat")
        throw $outErr
+    }
+    if($null -eq $project )
+    {
+        $outErr = [string]::Format("Get-ADOContext - project cannot be null.  Please provide an project that is associated with the pat")
+        throw $outErr
     }
     $perTok = $pat
     $perTok = [System.Convert]::ToBase64String( [System.Text.Encoding]::ASCII.GetBytes(":$pat"))

@@ -97,6 +97,7 @@ NestedModules = @(
 ".\functions\Remove-Wiki.ps1",
 ".\functions\Set-ADOAuthHeaders.ps1",
 ".\functions\Set-ADOGlobals.ps1",
+".\functions\Update-WikiPage.ps1",
 ".\functions\Write-DebugInfo.ps1",
 ".\functions\Write-DebugObject.ps1"
 )
@@ -129,6 +130,7 @@ FunctionsToExport = @(
 "Remove-Wiki",
 "Set-ADOAuthHeaders",
 "Set-ADOGlobals",
+"Update-WikiPage"
 "Write-DebugInfo",
 "Write-DebugObject"
 )
