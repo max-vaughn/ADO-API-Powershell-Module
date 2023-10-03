@@ -1,0 +1,15 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "PowerShell: Launch Script",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}\\testrun.ps1",
+            "args": ["-PageID", "1197510","-PerTok", "ej7pyx2sinrqer4cxsecxjfmsvvoch4h2xp5i6c5qoc2kws6vuaa"]
+        }
+    ]
+}

@@ -4,7 +4,7 @@ function Update-WikiPage  {
     param (
         [Parameter()]
         [PSObject] $adoContext = $null,
-        [string] $ETag = "",
+        $ETag = $null,
         [int] $wikiOrdinal = 0,
         [string]  $wikiUri = "",
         [string]  $wikiPageFullUrl = "",
@@ -15,6 +15,10 @@ function Update-WikiPage  {
         [string]$Content = "",
         [string] $pageVersion = ""
     )
+    #
+    # Setup debug stringbuilder
+    #
+    
     #
     # Check the Content parameter.
     # If its not set, there is nothing to do, exit
@@ -81,12 +85,13 @@ function Update-WikiPage  {
             #
             $wikiPage = [string]::Format("{0}/pages/{1}?&{2}",$adoContext.WikiInfo.value[$wikiOrdinal].url, $pageId, $apiVersion)
             $callHeaders = $adoContext.Headers
-            if( $ETag.Length -gt 0 ){
+           if( $ETag.Length -gt 0 ){
                 #
                 # we have a possible version value, add the appropriate header
                 #
                 $callHeaders.Add( "If-Match", $ETag)
                 $outStr = write-output $ETag
+                
                 Write-DebugInfo $outStr DarkRed
             }
         }
@@ -106,7 +111,7 @@ function Update-WikiPage  {
     $body = "{
           `"Content`": `"$Content`"
         }"
-    $results = Invoke-RestMethod -Method PUT -Uri $wikiPage -Headers $callHeaders -ResponseHeadersVariable resHeaders
+    $results = Invoke-RestMethod -Method PATCH -Uri $wikiPage -Headers $callHeaders -ResponseHeadersVariable resHeaders -Body $body -ContentType "application/json"
     $outStr = write-output $results
     $dbgString = [string]::Format("Update-WikiPage -> Results:{0}", $outStr)
     Write-DebugInfo $dbgString -ForegroundColor DarkYellow
