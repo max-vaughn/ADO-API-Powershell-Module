@@ -9,7 +9,7 @@
             "type": "PowerShell",
             "request": "launch",
             "script": "${workspaceFolder}\\Samples\\testrun.ps1",
-            "args": ["-PageID", "1197510","-PerTok", "nihte2vtdoqzb246427ymkpuxqgfduocontowlvkh4wvf3rndb7a"]
+            "args": ["-PageID", "1197510","-PerTok", ""]
         }
     ]
 }
