@@ -2,7 +2,7 @@ function Get-WikiPage {
     [CmdletBinding()]
     param (
         [Parameter()]
-        [PSobject] $retHeaders,
+        [PSobject] $returnHeaders,
         [string]  $wikiUri,
         [string]  $wikiPageFullUrl = "",
         [string]  $pageId = "",
@@ -41,7 +41,7 @@ function Get-WikiPage {
     $dbgString = [string]::Format("Get-WikiPage -> {0}", $wikiPage)
     Write-DebugInfo -ForegroundColor DarkCyan $dbgString
     $results = Invoke-RestMethod -Uri $wikiPage -Headers $headers -ResponseHeadersVariable retH
-    $retHeaders | add-member NoteProperty returnHeaders $retH
+    $returnHeaders | add-member NoteProperty returnHeaders $retH
     $outStr = write-output $results
     $dbgString = [string]::Format("Get-WikiPage -> Results:{0}", $outStr)
     Write-DebugInfo $dbgString -ForegroundColor DarkCyan

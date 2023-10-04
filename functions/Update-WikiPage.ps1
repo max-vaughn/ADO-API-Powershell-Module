@@ -1,4 +1,76 @@
+# ==================> Function Update-WikiPage <==================
 
+<# 
+.SYNOPSIS
+Updates a wiki article content by using the ETag returned in the repsonse headers when
+The wiki article was retrieved.  An ETag is necessary to update an article successfully.  The 
+easist way to obetain an ETag for the article is to use the Get-WikiPage cmdlet passing new PSObject
+in the -ReturnHeaders parameter.
+
+
+.DESCRIPTION
+Based on the ADO Wiki Page update APIs:
+https://learn.microsoft.com/en-us/rest/api/azure/devops/wiki/wikis/update?view=azure-devops-rest-7.0&tabs=HTTP
+
+Will replace the current content of an article with the content provided in the -Content parameter.
+
+The cmdlet requires the following:
+1. A token or a Context object returned from Get-ADOContext and a pageID
+2. A PageID for a wiki article and a Context object to target the a specific wiki
+3. A PageID and a Wiki URL that points to the wiki along with a token
+4. A full wiki page URL with a Token
+5. A full wiki page URL with a Context object returned from Get-ADOContext
+And
+Some content to replace the current content and an ETag value for the article, or the cmdlet will throw an exception.
+
+
+
+EXAMPLES
+# Need Examples
+
+.PARAMETER adoContext
+a PSObject returned by the Get-ADOContext cmdlet.
+If no value is provided, the parameter is defaulted to NULL
+
+.PARAMETER ETag
+The ETag is a string array returned by a previous Get-WikiPage cmdlet in the Response 
+headers.  The ETag is used to identify which version of the article to update in the
+Wiki repository.
+
+.PARAMETER wikiOrdinal
+Index to use in the ADO Context objects WikiInfo array.  This ordinal
+identifies which wiki information structure to use to obtain the base wiki
+url.  The value is defaulted to 0.
+
+.PARAMETER wikiPageFullUrl
+This is the full wiki URL to use to update the article.  
+
+
+.PARAMETER workUri
+The base wiki uri that is used to build the final wiki article path.  If this 
+value is empty and the Context object is empty and the wikiFullUrl is empty, then
+the CMDLET cannot identify the article to modify and will throw an 
+Exception.
+
+.PARAMETER PageID
+This is the page ID of the wiki article, can be used to build the full wiki URL from 
+the other component parts of the URL.  This value is required if the wikiPageFullUrl is
+empty.
+
+.PARAMETER headers
+Hashtable containing the HTTP headers to send with the REST request.  Must inlcucde the authentication header value build from the Personal Access Token
+
+.PARAMETER apiVersion
+Full version parameter string, currently, it is defaulted to api-version=7.2-preview.1" but can be
+changed to target others.
+
+.PARAMETER Content
+The content for the article.  If no content is passed the cmdlet will throw an execption.  
+Nothing to update.
+
+.NOTES
+General notes
+#>
 function Update-WikiPage  {
     [CmdletBinding()]
     param (
@@ -12,8 +84,7 @@ function Update-WikiPage  {
         [ValidateNotNull()]
         [hashtable] $headers = $global:gHeaders,
         [string] $apiVersion = "api-version=7.2-preview.1",
-        [string]$Content = "",
-        [string] $pageVersion = ""
+        [string]$Content = ""
     )
     #
     # Setup debug stringbuilder
