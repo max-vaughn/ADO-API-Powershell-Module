@@ -53,7 +53,7 @@ function Get-WikiPage {
         $pageUrl = $results.remoteUrl
         $lastSlash = $pageUrl.LastIndexOf("/")
         $pageUrl = $pageUrl.SubString(0, $lastSlash)
-        $pageUrl = [string]::Format("{0}?pageID={1}", $pageUrl, $resItem.id)
+        $pageUrl = [string]::Format("{0}?pageID={1}", $pageUrl, $results.id)
         #
         # Create the return item object
         #
