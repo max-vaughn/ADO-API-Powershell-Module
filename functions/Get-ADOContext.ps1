@@ -100,7 +100,7 @@ function Get-ADOContext {
     $dbgStr = [string]::Format("Get-ADOContext -> *orgUrl :{0}*-*organization: {1}*-*project: {2}*", $orgUrl, $organization, $project )
     Write-DebugInfo -ForegroundColor DarkBlue $dbgStr
     $projs = Get-ADOProjects -organization $organization -headers $adoHeaders
-    $projID = Get-ADOProjectID -projects $projs -project $project
+    $projID = Get-ADOProjectID -projects $projs -project $project -headers $adoHeaders
     $dbgStr = [string]::Format("Get-ADOContext -> *project:{0}*-*projID: {1}*", $project, $projID )
     Write-DebugInfo -ForegroundColor DarkBlue $dbgStr
     If( $wikiName.Length -gt 0 )

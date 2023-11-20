@@ -47,7 +47,7 @@ function Invoke-RestMethodWithPaging {
     param(
      [string] $Method,
      [string] $Uri,
-     $Headers
+     [hashtable] $Headers
     )
     $result = Invoke-RestMethod -Method $Method -Uri $Uri -Headers $Headers -ResponseHeadersVariable resHeaders
     $continuationToken = $resHeaders['x-ms-continuationtoken']
