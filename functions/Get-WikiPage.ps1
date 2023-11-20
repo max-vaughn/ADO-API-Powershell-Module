@@ -12,7 +12,8 @@ function Get-WikiPage {
         [ValidateSet( "none", "oneLevel", "full", "oneLevelPlusNestedEmptyFolders")]
         [string] $recursionLevel = "none",
         [string] $apiVersion = "api-version=6.0-preview.1",
-        [bool]$includeContent = $false
+        [bool]$includeContent = $false,
+        [bool]$returnPageObject = $false
     )
     if ( $pageId.Length -gt 0 ) { 
         #
@@ -45,5 +46,26 @@ function Get-WikiPage {
     $outStr = write-output $results
     $dbgString = [string]::Format("Get-WikiPage -> Results:{0}", $outStr)
     Write-DebugInfo $dbgString -ForegroundColor DarkCyan
+    if( $returnPageObject -eq $true ){
+                #
+        # Build PageId reference URL and add it to the output
+        #
+        $pageUrl = $results.remoteUrl
+        $lastSlash = $pageUrl.LastIndexOf("/")
+        $pageUrl = $pageUrl.SubString(0, $lastSlash)
+        $pageUrl = [string]::Format("{0}?pageID={1}", $pageUrl, $resItem.id)
+        #
+        # Create the return item object
+        #
+        $retItem = new-object PSObject
+        $retItem | Add-Member -Name "pageID" -Type NoteProperty -Value $results.id
+        $retItem | Add-Member -Name "pageUrl" -Type NoteProperty -Value $pageUrl
+        $retItem | Add-Member -Name "path" -Type NoteProperty -Value $results.path
+        $retItem | Add-Member -Name "url" -Type NoteProperty -Value $results.url
+        $retItem | Add-Member -Name "gitItemPath" -Type NoteProperty -Value $results.gitItemPath
+        $retItem | Add-Member -Name "Reviewer" -Type NoteProperty -Value ""
+        $retItem | Add-Member -Name "Review Date" -Type NoteProperty -Value ""
+        $results = $retItem
+    }
     return $results
 }
