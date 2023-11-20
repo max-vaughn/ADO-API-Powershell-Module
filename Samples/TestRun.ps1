@@ -5,7 +5,7 @@ param (
 )
 $Context = Get-ADOContext -pat $perTok -organization "Supportability" -project "AzureAD"
 $retH = new-object psobject
-$page = Get-WikiPage -WikiUri $Context.WikiInfo.Value[0].url -pageId $PageID -headers $Context.Headers -recursionLevel "none" -includeContent $true -retHeaders $retH
+$page = Get-WikiPage -WikiUri $Context.WikiInfo.Value[0].url -pageId $PageID -headers $Context.Headers -recursionLevel "none" -includeContent $true -returnHeaders $retH
 $newContent = $page.content
 $newContent = $newContent + "  **MAMA MIA**  *Too Cool*  "
 $Global:debugCmdlets = $true

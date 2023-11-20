@@ -5,11 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "PSH: Lch Current",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${file}",
+            "cwd": "${cwd}"
+        },
+        {
             "name": "PowerShell: Launch Script",
             "type": "PowerShell",
             "request": "launch",
             "script": "${workspaceFolder}\\Samples\\testrun.ps1",
-            "args": ["-PageID", "1197510","-PerTok", ""]
+            "args": ["-PageID", "1197510","-PerTok", "ws55tvceb7bltihmqasaco4xucvaum7ofofwmk3a32e4deiohbeq"]
+        },
+        {
+            "name": "PSH: Lch findPath",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}\\Samples\\findpath.ps1",
+            "args": ["-PerTok", "ws55tvceb7bltihmqasaco4xucvaum7ofofwmk3a32e4deiohbeq"]
         }
     ]
 }
