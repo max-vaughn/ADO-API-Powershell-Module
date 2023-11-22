@@ -9,4 +9,4 @@ param (
 $Context = Get-ADOContext -pat $perTok -organization "Supportability" -project "AzureAD"
 $retH = new-object psobject
 $page = Get-WikiPage -WikiUri $Context.WikiInfo.Value[0].url -basePath $PathVar -headers $Context.Headers -recursionLevel oneLevel -includeContent $true 
-
+$pagePath = Get-pagePath -remoteUrl $page.remoteUrl

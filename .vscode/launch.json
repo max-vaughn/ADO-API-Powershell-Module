@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "PSH: Lch Current",
             "type": "PowerShell",
@@ -23,6 +24,20 @@
             "type": "PowerShell",
             "request": "launch",
             "script": "${workspaceFolder}\\Samples\\findpath.ps1",
+            "args": ["-PerTok", ""]
+        },
+        {
+            "name": "PSH: Lch tstpagepath",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}\\Samples\\tstpagepath.ps1",
+            "args": ["-PerTok", ""]
+        },
+        {
+            "name": "PSH: Lch Page List",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}\\Samples\\getpagelist.ps1",
             "args": ["-PerTok", ""]
         }
     ]

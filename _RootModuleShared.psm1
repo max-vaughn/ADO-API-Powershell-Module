@@ -8,6 +8,7 @@ Export-ModuleMember -Function Get-ADOProjects
 Export-ModuleMember -Function Get-ADOUrl
 Export-ModuleMember -Function Get-GitItems
 Export-ModuleMember -Function Get-PageStatsFromCSV
+Export-ModuleMember -Function Get-pagePath
 Export-ModuleMember -Function Get-WikiFolderDocs
 Export-ModuleMember -Function Get-WikiPage
 Export-ModuleMember -Function Get-WikiPageIdFromTagPage
