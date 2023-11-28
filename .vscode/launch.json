@@ -38,7 +38,14 @@
             "type": "PowerShell",
             "request": "launch",
             "script": "${workspaceFolder}\\Samples\\getpagelist.ps1",
-            "args": ["-PerTok", ""]
+            "args": ["-PerTok", "3nnuhaecuo3wc55apq2ylgw6pqi5qs3pul2z5b6kacpetjxxxeuq"]
+        },
+        {
+            "name": "PSH: Off Page List",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}\\Samples\\filelistOffIdentity.ps1",
+            "args": ["-PerTok", "3nnuhaecuo3wc55apq2ylgw6pqi5qs3pul2z5b6kacpetjxxxeuq"]
         }
     ]
 }

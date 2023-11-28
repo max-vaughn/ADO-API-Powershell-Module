@@ -38,7 +38,9 @@ function Get-Wikis {
     $requestUrl = [string]::Format("{0}?{1}", $requestURL, $apiVersion)
     Write-DebugInfo -ForegroundColor DarkYellow $headers.Authorization
     write-DebugInfo -ForegroundColor DarkYellow $requestUrl
-    $results = Invoke-RestMethod -Uri $requestURL -Headers $headers
+    $resheaders = $null
+    $results = $null
+    $results = Invoke-RestMethod -Uri $requestURL -Headers $headers -ResponseHeadersVariable resheaders
     $dbgStr  = [string]::Format("Get-Wikis -> Exit Function")
     Write-DebugInfo -ForegroundColor DarkYellow $dbgStr
     return $results
