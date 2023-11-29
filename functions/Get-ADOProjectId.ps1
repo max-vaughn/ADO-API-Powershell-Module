@@ -40,7 +40,7 @@ function Get-ADOProjectId {
             if( $item.name -eq $project )
             {
                 $projectID = $item.id
-                Write-Host $item
+                # Write-Host $item
                 $dbgStr = [string]::Format("Get-ADOProjectId -> PROJECT NAME MATCH *project:{0}*-*Project ID: {1}", $item.name, $item.id )
                 Write-DebugInfo -ForegroundColor DarkBlue $dbgStr
                 break;

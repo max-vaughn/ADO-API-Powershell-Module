@@ -24,7 +24,7 @@ Function Get-WikiFolderDocs {
         [string] $basePath = "",
         [ValidateSet( "oneLevel", "full")]
         [string] $recursionLevel = "full",
-        [string] $apiVersion = "api-version=6.0-preview.1",
+        [string] $apiVersion = "api-version=7.1",
         [bool]$includeContent = $false,
         [bool]$returnPageInfo = $false,
         [bool]$foldersOnly = $false
@@ -54,7 +54,9 @@ Function Get-WikiFolderDocs {
                     #
                     # Return the entire page information object from the Get on the wiki page
                     #
-                    $resPage = Get-WikiPage -wikiPageFullUrl $_.url -headers $headers
+                    $pathval = Get-pagePath -remoteUrl $_.remoteUrl
+                    $wikiPage = [string]::Format("{0}/pages/?{1}",$pathVal , $wikiUri,  $recursionLevel, $includeContent.ToString(), $apiVersion)
+                    $resPage = Get-WikiPage -wikiPageFullUrl $wikiPage -headers $headers
                     $val = $_
                     $val | Add-Member -Name "ID" -Type NoteProperty -Value $resPage.ID
                     $val
@@ -68,7 +70,9 @@ Function Get-WikiFolderDocs {
                    #
                    # Return the entire page information object from the Get on the wiki page
                    #
-                   $resPage = Get-WikiPage -wikiPageFullUrl $_.url -headers $headers
+                   $pathval = Get-pagePath -remoteUrl $_.remoteUrl
+                   $wikiPage = [string]::Format("{0}/pages/?{1}", $wikiUri, $pathVal )
+                  $resPage = Get-WikiPage -wikiPageFullUrl $wikiPage -headers $headers
                    $val = $_
                    $val | Add-Member -Name "ID" -Type NoteProperty -Value $resPage.ID
                    $val
@@ -77,7 +81,9 @@ Function Get-WikiFolderDocs {
                    #
                    # Return just the URL
                    #
-                   $_.url
+                   $pathval = Get-pagePath -remoteUrl $_.remoteUrl
+                   $wikiPage = [string]::Format("{0}/pages/?{1}", $wikiUri, $pathVal )
+                  $wikiPage
                }
             } 
         }
@@ -88,7 +94,8 @@ Function Get-WikiFolderDocs {
             # along with the entire tree
             #
             If ($_.isParentPage -eq $true) { 
-                Get-WikiFolderDocs -wikiPageFullUrl $_.url -headers $headers -apiVersion $apiVersion -returnPageInfo $returnPageInfo
+                #$wikiPage = [string]::Format("{0}/pages/{1}?recursionLevel={2}&includeContent={3}&{4}", $wikiUri, $_.pageId)               
+                Get-WikiFolderDocs -wikiUri $wikiUri -wikiPageFullUrl $_.url -headers $headers -apiVersion $apiVersion -returnPageInfo $returnPageInfo
             }
             else {
 
@@ -96,7 +103,9 @@ Function Get-WikiFolderDocs {
                     #
                     # Return the entire page information object from the Get on the wiki page
                     #
-                    $resPage = Get-WikiPage -wikiPageFullUrl $_.url -headers $headers
+                    $pathval = Get-pagePath -remoteUrl $_.remoteUrl
+                    $wikiPage = [string]::Format("{0}/pages/?{1}", $wikiUri,$pathVal )
+                   $resPage = Get-WikiPage -wikiPageFullUrl $wikiPage -headers $headers
                     $val = $_
                     $val | Add-Member -Name "ID" -Type NoteProperty -Value $resPage.ID
                     $val
@@ -105,7 +114,9 @@ Function Get-WikiFolderDocs {
                     #
                     # Return just the URL
                     #
-                    $_.url
+                    $pathval = Get-pagePath -remoteUrl $_.remoteUrl
+                    $wikiPage = [string]::Format("{0}/pages/?{1}",$wikiUri, $pathVal )
+                   $wikiPage
                 } # end recursion if block
             } # end checking for onelevel block
         }

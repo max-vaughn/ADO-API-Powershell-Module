@@ -16,7 +16,7 @@ Function Get-WikiPageList {
         [string] $basePath = "",
         [ValidateSet( "oneLevel", "full")]
         [string] $recursionLevel = "full",
-        [string] $apiVersion = "api-version=6.0-preview.1",
+        [string] $apiVersion = "api-version=7.1",
         [bool]$includeContent = $false
          )
     $articleList = Get-WikiFolderDocs -wikiUri $wikiUri -wikiPageFullUrl $wikiPageFullUrl -pageId $pageId -headers $headers -basePath $basePath -recursionLevel $recursionLevel -apiVersion $apiVersion -includeContent $includeContent

@@ -1,4 +1,4 @@
-# ==================> Function Get-ADOContext <==================
+# ==================> Function Get-ADORepos <==================
 
 <# 
 
@@ -66,64 +66,15 @@ For an example of a cmdlet that does just this type of work, see the New-WorkIte
 Get-help New-WorkItemsFromWikiPages 
 
 #>
-function Get-ADOContext {
-    [CmdletBinding()]
+function Get-ADORepos {
     param (
-        [string]$pat,
-        [string]$organization,
-        [string]$project = $null,
-        [string]$wikiName = $null
+        [psobject] $Context = $null, 
+        [string] $baseUrl,
+        [string] $repoID = $null,
+        [hashtable] $header = $global:gHeaders
     )
-    #
-    # encode the Personal Access Token and create the header hash table
-    #
-    if($pat.Length -EQ 0 ){
-        $outErr = [string]::Format("Get-ADOContext - Personal Access token cannot be null.  Please provide a personal access token")
-        throw $outErr
-    }
-    if( $null -eq $organization)
-    {
-       $outErr = [string]::Format("Get-ADOContext - organization cannot be null.  Please provide an organization that is associated with the pat")
-       throw $outErr
-    }
-    if($null -eq $project )
-    {
-        $outErr = [string]::Format("Get-ADOContext - project cannot be null.  Please provide an project that is associated with the pat")
-        throw $outErr
-    }
-    $perTok = $pat
-    $perTok = [System.Convert]::ToBase64String( [System.Text.Encoding]::ASCII.GetBytes(":$pat"))
-    $retHash = @{ token = $perTok; org = $orgUrl }
-    $adoHeaders = Set-ADOAuthHeaders -tokenHash $retHash
-    $res = Get-ADOOrganizationBaseURL -organizationName $organization
-    $orgUrl = $res
-    $dbgStr = [string]::Format("Get-ADOContext -> *orgUrl :{0}*-*organization: {1}*-*project: {2}*", $orgUrl, $organization, $project )
-    Write-DebugInfo -ForegroundColor DarkBlue $dbgStr
-    $projs = Get-ADOProjects -organization $organization -headers $adoHeaders
-    $projID = Get-ADOProjectID -projects $projs -project $project -headers $adoHeaders
-    $dbgStr = [string]::Format("Get-ADOContext -> *project:{0}*-*projID: {1}*", $project, $projID )
-    Write-DebugInfo -ForegroundColor DarkBlue $dbgStr
-    If( $wikiName.Length -gt 0 )
-    {
-        #
-        # There is a specific wiki name for the wikiInfo structure, use it.
-        #
-        $WikiInfo =  Get-Wikis -baseUrl $orgUrl -Project $projID -wikiName $wikiName -headers $adoHeaders -Organization $organization
-    }
-    else {
-        # 
-        # No specific wiki, get all registered wikis
-        #
-        $WikiInfo = Get-Wikis -baseUrl $orgUrl -organization $organization -project $projID -headers $adoHeaders
-        Write-DebugObject -debugString "Get-ADOContext" -inputObject $WikiInfo
-    }
-    $retContext = New-Object -TypeName PSObject
-    $retContext | Add-Member -Name "WikiInfo" -Type NoteProperty -Value $WikiInfo
-    $retContext | Add-Member -Name "Headers" -Type NoteProperty -Value $adoHeaders
-    $retContext | Add-Member -Name "OrgUrl" -Type NoteProperty -Value $orgUrl
-    $retContext | Add-Member -Name "Project" -Type NoteProperty -Value $project
-    $retContext | Add-Member -Name "ProjectId" -Type NoteProperty -Value $projID
-    $retContext | Add-Member -Name "Organization" -Type NoteProperty -Value $organization
-    $retContext | Add-Member -Name "Projects" -Type NoteProperty -Value $projs
-    return $retContext
+    $deleteRepoUri = [string]::Format("{0}_apis/git/repositories/{1}?api-version=6.0", $baseUrl, $repoId)
+    Write-DebugInfo $deleteRepoUri -ForegroundColor DarkMagenta
+    $results = Invoke-RestMethod -Method Delete -Uri $deleteRepoUri -Headers $header
+    return $results 
 }

@@ -23,7 +23,7 @@ function Get-Wikis {
         #
         $requestURL = [string]::Format("{0}{1}/_apis/wiki/wikis", $baseUrl, $project)
         $dbgStr = [string]::Format("Get-Wikis -> requestUrl: {0}", $requestURL)
-        Write-DebugInfo -debugString DarkBlue $dbgStr
+        Write-DebugInfo -debugString  $dbgStr -ForegroundColor DarkBlue
     }
     else {
         #
@@ -38,7 +38,9 @@ function Get-Wikis {
     $requestUrl = [string]::Format("{0}?{1}", $requestURL, $apiVersion)
     Write-DebugInfo -ForegroundColor DarkYellow $headers.Authorization
     write-DebugInfo -ForegroundColor DarkYellow $requestUrl
-    $results = Invoke-RestMethod -Uri $requestURL -Headers $headers
+    $resheaders = $null
+    $results = $null
+    $results = Invoke-RestMethod -Uri $requestURL -Headers $headers -ResponseHeadersVariable resheaders
     $dbgStr  = [string]::Format("Get-Wikis -> Exit Function")
     Write-DebugInfo -ForegroundColor DarkYellow $dbgStr
     return $results

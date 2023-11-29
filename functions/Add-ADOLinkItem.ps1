@@ -17,18 +17,7 @@ https://docs.microsoft.com/en-us/azure/devops/boards/queries/link-type-reference
 
 
 EXAMPLES
-# Add Admin Consent for a Delegated Permission
-Add-AadConsent -ClientId b330d711-77c4-463b-a391-6b3fbef74ffd -ResourceId "Microsoft Graph" -PermissionType Delegated -ClaimValue User.Read
-
-# Add User Consent for single user (new OAuth2PermissionGrant)
-Add-AadConsent -ClientId b330d711-77c4-463b-a391-6b3fbef74ffd -ResourceId "Microsoft Graph" -PermissionType Delegated -ClaimValue User.Read -UserId john@contoso.com
-
-# Update User Consent for all users (existing OAuth2PermissionGrant)
-Add-AadConsent -ClientId b330d711-77c4-463b-a391-6b3fbef74ffd -ResourceId "Microsoft Graph" -ConsentType User -PermissionType Delegated -ClaimValue Directory.AccessAsUser.All
-
-# Add Admin Consent for Application Permission
-Add-AadConsent -ClientId b330d711-77c4-463b-a391-6b3fbef74ffd -ResourceId "Microsoft Graph" -PermissionType Application -ClaimValue User.Read.All
-
+# Need Examples
 
 .PARAMETER workItemsUrl
 full url to the API endpoint for adding a workitem without the parameters 
