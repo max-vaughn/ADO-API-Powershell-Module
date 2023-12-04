@@ -5,6 +5,7 @@
     "version": "0.2.0",
     "configurations": [
 
+
         {
             "name": "PSH: Lch Current",
             "type": "PowerShell",
@@ -46,6 +47,13 @@
             "request": "launch",
             "script": "${workspaceFolder}\\Samples\\filelistOffIdentity.ps1",
             "args": ["-PerTok", ""]
+        },
+        {
+            "name": "PSH: Set PSModulePath",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}\\setPsPath.ps1",
+            "args": ["-ModulePath", "'${workspaceFolder}\\AdoApiSupport;${workspaceFolder}\\AdoWikiUtils;'"]
         }
     ]
 }
