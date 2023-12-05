@@ -3,4 +3,5 @@ param (
 )
 $pathVal = $ModulePath + $env:PSModulePath
 $env:PSModulePath = $pathVal
-$env:PSModulePath
+$mods = Get-Module -ListAvailable ("AdoApiSupport","AdoWikiUtils")
+Import-Module $mods -Force -Verbose

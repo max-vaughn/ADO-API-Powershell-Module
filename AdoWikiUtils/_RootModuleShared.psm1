@@ -1,2 +1,2 @@
-Export-ModuleMember -Function Get-ADOWikiTags
+Export-ModuleMember -Function Get-ADOWikiYAMLtags
 

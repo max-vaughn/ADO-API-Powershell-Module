@@ -70,71 +70,11 @@
     # NestedModules = @()
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
     NestedModules     = @(
-        ".\functions\Add-ADOLinkItem.ps1",
-        ".\functions\Get-ADOContext.ps1",
-        ".\functions\Get-ADOOperationJSON.ps1",
-        ".\functions\Get-ADOOrganizationBaseUrl.ps1",
-        ".\functions\Get-ADOProcessTemplates.ps1",
-        ".\functions\Get-ADOProjectId.ps1",
-        ".\functions\Get-ADOProjects.ps1",
-        ".\functions\Get-ADOUrl.ps1",
-        ".\functions\Get-GitItems.ps1",
-        ".\functions\Get-PageStatsFromCSV.ps1",
-        ".\functions\Get-pagePath.ps1",
-        ".\functions\Get-WikiFolderDocs.ps1",
-        ".\functions\Get-WikiPage.ps1",
-        ".\functions\Get-WikiPageIdFromTagPage.ps1",
-        ".\functions\Get-WikiPageList.ps1",
-        ".\functions\Get-WikiPages.ps1",
-        ".\functions\Get-WikiPageStats.ps1",
-        ".\functions\Get-Wikis.ps1",
-        ".\functions\Get-WorkItemById.ps1",
-        ".\functions\Invoke-RestMethodWithPaging.ps1",
-        ".\functions\New-ADOCreateOperation.ps1",
-        ".\functions\New-ADOWorkItem.ps1",
-        ".\functions\New-ReplacementItem.ps1",
-        ".\functions\New-WorkItemsFromWikiPages.ps1",
-        ".\functions\Remove-Repo.ps1",
-        ".\functions\Remove-Wiki.ps1",
-        ".\functions\Set-ADOAuthHeaders.ps1",
-        ".\functions\Set-ADOGlobals.ps1",
-        ".\functions\Update-WikiPage.ps1",
-        ".\functions\Write-DebugInfo.ps1",
-        ".\functions\Write-DebugObject.ps1"
+        ".\functions\Get-ADOWikiYAMLtags.ps1"
     )
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport = @(
-        "Add-ADOLinkItem",
-        "Get-ADOContext",
-        "Get-ADOOperationJSON",
-        "Get-ADOOrganizationBaseUrl",
-        "Get-ADOProcessTemplates",
-        "Get-ADOProjectId",
-        "Get-ADOProjects",
-        "Get-ADOUrl",
-        "Get-GitItems",
-        "Get-PageStatsFromCSV",
-        "Get-WikiFolderDocs",
-        "Get-WikiPage",
-        "Get-WikiPageIdFromTagPage",
-        "Get-WikiPageList",
-        "Get-WikiPages",
-        "Get-pagePath",
-        "Get-WikiPageStats",
-        "Get-Wikis",
-        "Get-WorkItemById",
-        "Invoke-RestMethodWithPaging",
-        "New-ADOCreateOperation",
-        "New-ADOWorkItem",
-        "New-ReplacementItem",
-        "New-WorkItemsFromWikiPages",
-        "Remove-Repo",
-        "Remove-Wiki",
-        "Set-ADOAuthHeaders",
-        "Set-ADOGlobals",
-        "Update-WikiPage"
-        "Write-DebugInfo",
-        "Write-DebugObject"
+        "Get-ADOWikiYAMLtags"
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

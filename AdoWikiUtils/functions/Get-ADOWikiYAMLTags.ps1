@@ -1,7 +1,7 @@
 #
-# Get-WikiPages
+# Get-AdoWikiYAMLtags
 #
-# ==================> Function Get-WikiPages <==================
+# ==================> Function Get-AdoWikiYAMLtags <==================
 
 <# 
 
@@ -129,7 +129,7 @@ For an example of a cmdlet that does just this type of work, see the New-WorkIte
 Get-help New-WorkItemsFromWikiPages 
 
 #>
-function Get-WikiPages {
+function Get-AdoWikiYAMLtags {
     [CmdletBinding()]
     param (
         [Parameter()]
@@ -146,56 +146,59 @@ function Get-WikiPages {
         [string] $apiVersion = "api-version=6.0-preview.1",
         [bool]$includeContent = $false
     )
-    [hashtable] $tmp_headers;
-    $tmp_headers = $headers;
-    $outErr = ""
-    <#
-      Check the basepath and the wikiPageFullUrl, one of these must have a value.
-      If wikiPageFullUrl is not set, then basePath must have a value.
-    #>
-    if( ($basePath.Length -eq 0) -and ($wikiPageFullUrl.Length -eq 0) ){
-        $outErr = [string]::Format("Get-WikiPages -basePath is null and wikiPageFullUrl does not have a value.  One of them must have a value.")
-        throw $outErr
-    }
-
-    <#
-      Setup the headers for the rest call.
-      If the Context has a value, and useContextHeaders is true, then
-      use the information in the Context object to initialize the headers for
-      the REST call and use the base wikiUrl from the Context object.
-    #>
-    if( ($null -ne $Context ) -and ($useContextHeaders -eq $true) )
-    {
-       $tmp_headers = $Context.Headers
-       $wikiUri = $Context.WikiInfo.Value[$wikiOrdinal].url
-    }
-    elseif ( $null -ne $Context )
-    {
-        $tmp_headers = $headers
-        $wikiUri = $Context.WikiInfo.Value[$wikiOrdinal].url
-    }
-    <#
-    Check the accept parameter, if it has a value, then add the 
-    Accept value to the headers.
-    #>
-    if( $accept.Length -gt 0 ){
-        $tmp_headers.Add("Accept", $accept)
-    }
-    <#
-    If wikiPageFullUrl has a value, then use it to build the wikiPages url for the get request
-    otherwise, build the url from the input parameters.
-    #>
-    if ( $wikiPageFullUrl.Length -gt 0 ) {
-        $wikiPages = [string]::Format("{0}?recursionLevel={1}&includeContent={2}&{3}", $wikiPageFullUrl, $recursionLevel, $includeContent.ToString(), $apiVersion)
-        $wikiPages = $wikiPageFullUrl
+    if( $null -eq $Context){
+        $local_headers = $headers
     }
     else {
-        $wikiPages = [string]::Format("{0}/pages?path={1}&recursionLevel={2}&includeContent={3}&{4}", $wikiUri, $basePath, $recursionLevel, $includeContent.ToString(), $apiVersion)
-        Write-DebugInfo -ForegroundColor DarkRed $wikiPages
+        $local_headers = $Context.Headers
     }
-    $results = Invoke-RestMethod -Uri $wikiPages -Headers $tmp_headers -ResponseHeadersVariable retHeaders
-    Write-DebugInfo -ForegroundColor DarkRed $retHeaders
-    Write-DebugObject -ForegroundColor DarkYellow $retHeaders -debugString "Return Headers"
-    $Global:RetHeaders = $retHeaders
-    return $results
+    $articleList = Get-WikiFolderDocs -wikiUri $wikiUri -wikiPageFullUrl $wikiPageFullUrl -pageId $pageId -headers $local_headers -basePath $basePath -recursionLevel $recursionLevel -apiVersion $apiVersion -includeContent $includeContent
+    Write-DebugInfo -ForegroundColor DarkCyan "Get-WikiPageList -> + "$articleList.Count
+    $wikiPageList = @()
+    foreach ($item in $articleList) {
+        $resItem = Get-WikiPage -wikiPageFullUrl $item -headers $local_headers -includeContent $true
+        #
+        # Build PageId reference URL and add it to the output
+        #
+        $pageUrl = $resItem.remoteUrl
+        $lastSlash = $pageUrl.LastIndexOf("/")
+        $pageUrl = $pageUrl.SubString(0, $lastSlash)
+        $pageUrl = [string]::Format("{0}?pageID={1}", $pageUrl, $resItem.id)
+        #
+        # Check for YAML tag block, if its present, copy it and return it
+        #
+        $YAMLBlock = ""
+        if( $resItem.content.IndexOf("---", 0, 6) -gt -1 ) {
+            #
+            # Start block fo YAML tags
+            # Find the ending "---" and return all that is inbetween
+            #
+            $endContent = $resItem.content.Length - 5
+            $endYAMLblock = $resItem.content.IndexOf( "---", 4, $endContent)
+            if( $endYAMLblock -gt -1 ){
+                $YAMLBlock = $resItem.content.SubString(5, $endYAMLBlock-1 )
+                $YAMLBlock = $YAMLBlock.Replace("`r`n", ";")
+            }
+            else {
+                $YAMLBlock = ""
+            }
+        }
+        #
+        # Create the return item object
+        #
+        $retItem = new-object PSObject
+        $retItem | Add-Member -Name "pageID" -Type NoteProperty -Value $resItem.id
+        $retItem | Add-Member -Name "pageUrl" -Type NoteProperty -Value $pageUrl
+        $retItem | Add-Member -Name "path" -Type NoteProperty -Value $resItem.path
+        $retItem | Add-Member -Name "url" -Type NoteProperty -Value $resItem.url
+        $retItem | Add-Member -Name "gitItemPath" -Type NoteProperty -Value $resItem.gitItemPath
+        $retItem | Add-Member -Name "Tags" -Type NoteProperty -Value $YAMLBlock
+        $retItem | Add-Member -Name "Reviewer" -Type NoteProperty -Value ""
+        $retItem | Add-Member -Name "Review Date" -Type NoteProperty -Value ""
+        #
+        # Stuff it into the list
+        #
+        $wikiPageList = $wikiPageList + $retItem 
+    }
+    return $wikiPageList
 }
