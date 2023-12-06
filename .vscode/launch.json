@@ -18,7 +18,7 @@
             "type": "PowerShell",
             "request": "launch",
             "script": "${workspaceFolder}\\Samples\\testrun.ps1",
-            "args": ["-PageID", "1197510","-PerTok", "s2f6qtfuynpypv46gnbnr3jk2n5qsey2qbkxtndcs4nh5annkhaa"]
+            "args": ["-PageID", "1197510","-PerTok", ""]
         },
         {
             "name": "PSH: Lch findPath",
@@ -39,14 +39,14 @@
             "type": "PowerShell",
             "request": "launch",
             "script": "${workspaceFolder}\\Samples\\getpagelist.ps1",
-            "args": ["-PerTok", "s2f6qtfuynpypv46gnbnr3jk2n5qsey2qbkxtndcs4nh5annkhaa"]
+            "args": ["-PerTok", ""]
         },
         {
             "name": "PSH: Off Page List",
             "type": "PowerShell",
             "request": "launch",
             "script": "${workspaceFolder}\\Samples\\filelistOffIdentity.ps1",
-            "args": ["-PerTok", "s2f6qtfuynpypv46gnbnr3jk2n5qsey2qbkxtndcs4nh5annkhaa"]
+            "args": ["-PerTok", ""]
         },
         {
             "name": "PSH: Set PSModulePath",

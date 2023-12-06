@@ -174,10 +174,13 @@ function Get-AdoWikiYAMLtags {
             # Find the ending "---" and return all that is inbetween
             #
             $endContent = $resItem.content.Length - 5
-            $endYAMLblock = $resItem.content.IndexOf( "---", 4, $endContent)
+            $endYAMLblock = $resItem.content.IndexOf( "---", 4, $endContent) -5
             if( $endYAMLblock -gt -1 ){
-                $YAMLBlock = $resItem.content.SubString(5, $endYAMLBlock-1 )
+                $startCpy = $resItem.content.IndexOf("Tags:`r`n") + 7
+                $endYAMLblock = $endYAMLblock - 9
+                $YAMLBlock = $resItem.content.SubString($startCpy, $endYAMLBlock)
                 $YAMLBlock = $YAMLBlock.Replace("`r`n", ";")
+                $YAMLBlock = $YAMLBlock.Replace("- ","")
             }
             else {
                 $YAMLBlock = ""

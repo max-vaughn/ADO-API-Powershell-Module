@@ -11,3 +11,4 @@ $retH = new-object psobject
 $page = Get-WikiPage -WikiUri $Context.WikiInfo.Value[0].url -basePath $PathVar -headers $Context.Headers -recursionLevel oneLevel -includeContent $true 
 $pageList = Get-ADOWikiYAMLTags -WikiUri $Context.WikiInfo.Value[0].url -basePath $PathVar -headers $Context.Headers -recursionLevel full
 $pageList.Count
+$pageList | export-csv -NoTypeInformation -Path .\YAMLList.csv -Force
