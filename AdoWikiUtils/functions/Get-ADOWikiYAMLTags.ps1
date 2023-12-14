@@ -173,6 +173,26 @@ function Get-AdoWikiYAMLtags {
             # Start block fo YAML tags
             # Find the ending "---" and return all that is inbetween
             #
+            $srl = new-object System.IO.StringReader -ArgumentList $resItem.content
+            $srLine = $srl.ReadLine()
+            $YAMLBlock = ""
+            $firstItem = $true
+            while ($true) {
+                $srLine = $srl.ReadLine()
+                if ( $null -eq $srLine ) { break }
+                if ( $srLine.IndexOf("---") -gt -1 ) { break }
+                if ( $srLine.IndexOf("Tag") -eq -1 ) {
+                    $srLine = $srLine.Replace( "- ", "")
+                    if ( -not ( [string]::IsNullOrWhiteSpace( $srLine ) ) ) {
+                        if ( $firstItem ) { 
+                            $YAMLBlock = $srLine
+                            $firstItem = $false
+                        }
+                        else { $YAMLBlock = $YAMLBlock + ";" + $srLine }
+                    }
+                }
+            }
+            <#
             $endContent = $resItem.content.Length - 5
             $endYAMLblock = $resItem.content.IndexOf( "---", 4, $endContent) -5
             if( $endYAMLblock -gt -1 ){
@@ -183,8 +203,9 @@ function Get-AdoWikiYAMLtags {
                 $YAMLBlock = $YAMLBlock.Replace("- ","")
             }
             else {
-                $YAMLBlock = ""
+                $YAMLBlock = "No YAML Tags"
             }
+            #>
         }
         #
         # Create the return item object
