@@ -49,6 +49,13 @@
             "args": ["-PerTok", ""]
         },
         {
+            "name": "PSH: Key Vault",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}\\Samples\\keyvaultcontent.ps1",
+            "args": ["-PerTok", ""]
+        },
+        {
             "name": "PSH: Set PSModulePath",
             "type": "PowerShell",
             "request": "launch",

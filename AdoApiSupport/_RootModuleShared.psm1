@@ -10,6 +10,7 @@ Export-ModuleMember -Function Get-GitItems
 Export-ModuleMember -Function Get-PageStatsFromCSV
 Export-ModuleMember -Function Get-pagePath
 Export-ModuleMember -Function Get-WikiFolderDocs
+Export-ModuleMember -Function Get-WikiFromContext
 Export-ModuleMember -Function Get-WikiPage
 Export-ModuleMember -Function Get-WikiPageIdFromTagPage
 Export-ModuleMember -Function Get-WikiPageList
