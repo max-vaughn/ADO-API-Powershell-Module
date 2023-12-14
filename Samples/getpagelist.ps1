@@ -1,5 +1,5 @@
 param (
-    [string] $pertok = "sgnp5rsfa227wrapuroryajoztclwyde22xundl4rz2ptvt374ka",
+    [string] $pertok = "",
     #[string] $PathVar = "GeneralPages/AAD/AAD%20Account%20Management/AAD%20Government%20Troubleshooting/TSG%3A%20Password%20Reset%20Requests%20for%20Azure%20Government%20Tenants",
     #[string] $PathVar = "Authentication",
     [string] $PathVar = "GeneralPages/AAD",

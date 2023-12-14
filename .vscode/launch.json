@@ -39,7 +39,7 @@
             "type": "PowerShell",
             "request": "launch",
             "script": "${workspaceFolder}\\Samples\\getpagelist.ps1",
-            "args": ["-PerTok", "sgnp5rsfa227wrapuroryajoztclwyde22xundl4rz2ptvt374ka"]
+            "args": ["-PerTok", ""]
         },
         {
             "name": "PSH: Off Page List",
