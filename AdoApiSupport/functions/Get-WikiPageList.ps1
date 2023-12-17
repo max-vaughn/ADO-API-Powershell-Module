@@ -27,19 +27,22 @@ Function Get-WikiPageList {
         #
         # Build PageId reference URL and add it to the output
         #
+        $retItem = new-object PSObject
         $pageUrl = $resItem.remoteUrl
+        $retItem | Add-Member -Name "remoteUrl" -Type NoteProperty -Value $pageUrl
         $lastSlash = $pageUrl.LastIndexOf("/")
         $pageUrl = $pageUrl.SubString(0, $lastSlash)
         $pageUrl = [string]::Format("{0}?pageID={1}", $pageUrl, $resItem.id)
         #
         # Create the return item object
         #
-        $retItem = new-object PSObject
+
         $retItem | Add-Member -Name "pageID" -Type NoteProperty -Value $resItem.id
         $retItem | Add-Member -Name "pageUrl" -Type NoteProperty -Value $pageUrl
         $retItem | Add-Member -Name "path" -Type NoteProperty -Value $resItem.path
         $retItem | Add-Member -Name "url" -Type NoteProperty -Value $resItem.url
         $retItem | Add-Member -Name "gitItemPath" -Type NoteProperty -Value $resItem.gitItemPath
+
         $retItem | Add-Member -Name "Reviewer" -Type NoteProperty -Value ""
         $retItem | Add-Member -Name "Review Date" -Type NoteProperty -Value ""
         #

@@ -79,6 +79,7 @@ function Get-WikiPage {
         $retItem | Add-Member -Name "path" -Type NoteProperty -Value $results.path
         $retItem | Add-Member -Name "url" -Type NoteProperty -Value $results.url
         $retItem | Add-Member -Name "gitItemPath" -Type NoteProperty -Value $results.gitItemPath
+        $retItem | Add-Member -Name "remoteUrl" -Type NoteProperty -Value $result.remoteUrl
         $retItem | Add-Member -Name "Reviewer" -Type NoteProperty -Value ""
         $retItem | Add-Member -Name "Review Date" -Type NoteProperty -Value ""
         $results = $retItem

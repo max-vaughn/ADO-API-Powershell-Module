@@ -42,6 +42,13 @@
             "args": ["-PerTok", ""]
         },
         {
+            "name": "PSH: match ids",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}\\Samples\\matchPageIds.ps1",
+            "args": ["-PerTok", "", "-AzureData", "D:\\data\\AzureAdWiki.csv", "-KeyVaultData", "D:\\data\\KeyVaultWiki.csv"]
+        },
+        {
             "name": "PSH: Off Page List",
             "type": "PowerShell",
             "request": "launch",
