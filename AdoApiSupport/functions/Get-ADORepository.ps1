@@ -6,48 +6,59 @@ NOT READY FOR PRIME TIME!
 
 <#
 .SYNOPSIS
-Retrieves all of the projects that are defined in an organization.
+Retrieves all of the repositories in a given project.
 Requires a Personal Access Token represented in the Authorization header value in the 
 headers parameter.
 
 
 .DESCRIPTION
-Retrieves the projects that are part of the given organization.  
+Retrieves the repositories of a given project.
+The cmdlet takes a Context object created by Get-ADOContext that contains information about the environment. If
+the Context object is missing, the cmdlet will use the provided information in the other parameters. 
 Requires a Personal Access Token represented in the Authorization header value in the 
 headers parameter.
 
 Implements the ADO API located at:
-https://docs.microsoft.com/en-us/rest/api/azure/devops/core/projects/get?view=azure-devops-rest-6.0
+https://learn.microsoft.com/en-us/rest/api/azure/devops/git/repositories/list?view=azure-devops-rest-7.2&tabs=HTTP
 
-.PARAMETER organization
-Contains the organization to use to lookup the organization base url if the orgBaseUrl parameter is null.
-core URL structure defined here:
-https://docs.microsoft.com/en-us/azure/devops/extend/develop/work-with-urls?view=azure-devops&tabs=http#how-to-get-an-organizations-url
+.PARAMETER Context
+A context object created by the Get-ADOContext cmdlet
 
-Either the orgBaseUrl or the organization paramater must be present to succefully execute this cmdlet.
+.PARAMETER project
+A project name within the specified Context to target the API to retrieve the repositories.
 
-.Parameter orgBaseUrl
-Represents the base url for the organization.  If this parameter is present, the organization paramer is ignored
-and the API call is built from this base url.
+.PARAMETER repositoryID
+A target repository, if null, all of the repositories are returned as PSObject types using
+the GitRepository type defined:
+https://learn.microsoft.com/en-us/rest/api/azure/devops/git/repositories/list?view=azure-devops-rest-7.2&tabs=HTTP#gitrepository
 
-If this parameter is null, then the organization parameter must be present.  In this scenario,
-the Get-ADOOrganizationBaseUrl is used to obtain the organization's base url.
+If not Null a PSObject is returned with the single GitRepository type defined at the link above.
 
-.PARAMETER apiVersion 
-This parameter is present to allow for different versions of an API to be called.
-The parameter is initialed to the current API version as of 01/12/2021 to successfully 
-execute the target API.
+the value can be a string representing the ID guid of the repository or the repository name.
+
+.PARAMETER baseUrl
+String containing the base URL for the organization.  
+
+.PARAMETER repositryURL
+If present, must contain the full url to the target repository.
+
+.PARAMETER projectOrdinal
+Interger value representing the index of the target project within the provided Context object.
+This parameter is ignored if the Context object is null.
 
 .PARAMETER headers
-Hashtable containing the headers that will be added to the Invoke-RestMethod cmdlet.  The header must 
-contain the Authorization header value.  Use the Set-ADOAuthHeaders cmdlet with a Personal Access Token to 
-create a header hashtable.
+Contains the headers that should be used to make the Get request.
+if headers has a value, it will be used to make the Get request.
+
+.PARAMETER apiVersion
+Target API version.  Orignal code was created targeting api version 7.2-preview.1
 
 .OUTPUTS
-The cmdlet returns a collection of projects as defined by the following documentation link:
-https://docs.microsoft.com/en-us/rest/api/azure/devops/core/projects/get?view=azure-devops-rest-6.0#teamproject
+A target repository, if null, all of the repositories are returned as PSObject types using
+the GitRepository type defined:
+https://learn.microsoft.com/en-us/rest/api/azure/devops/git/repositories/list?view=azure-devops-rest-7.2&tabs=HTTP#gitrepository
 
-Each project is represented by a TeamProject object.
+If not Null a PSObject is returned with the single GitRepository type defined at the link above.
 
 
 .EXAMPLE
@@ -69,14 +80,16 @@ General notes
 #>
 function Get-ADORepository {
     param (
+        [psobject] $Context = $null,
+        [int] $projectOrdinal = -1,
         [string] $project = $null,
         [string] $organization = $null,
-        [hashtable] $headers = $global:gHeaders,
-        [string] $baseUrl = $global:strOrgUri,
-        [string] $wikiName = "",
-        [string] $apiVersion = "api-version=6.0"
+        [hashtable] $headers = $null,
+        [string] $baseUrl = $null,
+        [string] $repositoryID = "",
+        [string] $apiVersion = "api-version=7.2-preview.1"
     )
-    $requestURL = ""
+    <# $requestURL = ""
     If ( ($project.Length -GT 0 ) -and ($organization.Length -gt 0 ) -and ($wikiName.Length -gt 0 )) {
         #
         # Build the workitems request URL from the project, organization and the wiki ID or name
@@ -112,5 +125,6 @@ function Get-ADORepository {
     $results = Invoke-RestMethod -Uri $requestURL -Headers $headers -ResponseHeadersVariable resheaders
     $dbgStr  = [string]::Format("Get-Wikis -> Exit Function")
     Write-DebugInfo -ForegroundColor DarkYellow $dbgStr
+    #>
     return $results
 }
