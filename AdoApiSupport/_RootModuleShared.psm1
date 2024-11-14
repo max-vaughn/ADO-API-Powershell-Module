@@ -1,10 +1,12 @@
 Export-ModuleMember -Function Add-ADOLinkItem
 Export-ModuleMember -Function Get-ADOContext
+Export-ModuleMember -Function Get-ADOCommit
 Export-ModuleMember -Function Get-ADOOperationJSON
 Export-ModuleMember -Function Get-ADOOrganizationBaseUrl
 Export-ModuleMember -Function Get-ADOProcessTemplates
 Export-ModuleMember -Function Get-ADOProjectId
 Export-ModuleMember -Function Get-ADOProjects
+Export-ModuleMember -Function Get-ADORepository
 Export-ModuleMember -Function Get-ADOUrl
 Export-ModuleMember -Function Get-GitItems
 Export-ModuleMember -Function Get-PageStatsFromCSV
