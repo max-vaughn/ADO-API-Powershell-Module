@@ -87,8 +87,12 @@ function Get-ADORepository {
         [hashtable] $headers = $null,
         [string] $baseUrl = $null,
         [string] $repositoryID = "",
+        [string] $query = "",
         [string] $apiVersion = "api-version=7.2-preview.1"
     )
+    if( $Null -eq $Context ) {
+
+    }
     <# $requestURL = ""
     If ( ($project.Length -GT 0 ) -and ($organization.Length -gt 0 ) -and ($wikiName.Length -gt 0 )) {
         #

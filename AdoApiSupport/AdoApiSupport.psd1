@@ -72,11 +72,13 @@
     NestedModules     = @(
         ".\functions\Add-ADOLinkItem.ps1",
         ".\functions\Get-ADOContext.ps1",
+        ".\functions\Get-ADOCommit.ps1",
         ".\functions\Get-ADOOperationJSON.ps1",
         ".\functions\Get-ADOOrganizationBaseUrl.ps1",
         ".\functions\Get-ADOProcessTemplates.ps1",
         ".\functions\Get-ADOProjectId.ps1",
         ".\functions\Get-ADOProjects.ps1",
+        ".\functions\Get-ADORepository.ps1",
         ".\functions\Get-ADOUrl.ps1",
         ".\functions\Get-GitItems.ps1",
         ".\functions\Get-PageStatsFromCSV.ps1",
@@ -100,6 +102,7 @@
         ".\functions\Set-ADOAuthHeaders.ps1",
         ".\functions\Set-ADOGlobals.ps1",
         ".\functions\Update-WikiPage.ps1",
+        ".\functions\Update-ADOWorkItem.ps1"
         ".\functions\Write-DebugInfo.ps1",
         ".\functions\Write-DebugObject.ps1"
     )
@@ -107,11 +110,13 @@
     FunctionsToExport = @(
         "Add-ADOLinkItem",
         "Get-ADOContext",
+        "Get-ADOCommit",
         "Get-ADOOperationJSON",
         "Get-ADOOrganizationBaseUrl",
         "Get-ADOProcessTemplates",
         "Get-ADOProjectId",
         "Get-ADOProjects",
+        "Get-ADORepository",
         "Get-ADOUrl",
         "Get-GitItems",
         "Get-PageStatsFromCSV",
@@ -134,7 +139,8 @@
         "Remove-Wiki",
         "Set-ADOAuthHeaders",
         "Set-ADOGlobals",
-        "Update-WikiPage"
+        "Update-WikiPage",
+        "Update-ADOWorkItem",
         "Write-DebugInfo",
         "Write-DebugObject"
     )

@@ -43,14 +43,14 @@
                     }
                     if ( $areaPath.Length -GT 0 ) {
                         #
-                        # There is an Area Path value, add this value to the properities list as well.
+                        # There is an Area Path value, add this value to the properties list as well.
                         #
                         $property = new-ADOCreateOperation -Operation add -From null -Path "/fields/System.AreaPath" -Value $areaPath 
                         $properties = $properties + $property
                     }
                     if( $iterationPath.Length -gt 0 ) {
                                                 #
-                        # There is an iteration Path value, add this value to the properities list as well.
+                        # There is an iteration Path value, add this value to the properties list as well.
                         #
                         $property = new-ADOCreateOperation -Operation add -From null -Path "/fields/System.IterationPath" -Value $iterationPath 
                         $properties = $properties + $property

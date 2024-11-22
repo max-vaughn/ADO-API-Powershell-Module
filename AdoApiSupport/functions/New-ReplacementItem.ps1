@@ -49,10 +49,10 @@ Creating an array of Replacement items
 $LocalTokenHash = @{ token = $global:strEncodedPersonalToken; org = $global:strOrgUri }
 $headers = Set-ADOAuthHeaders -tokenHash $localTokenHash
 
-Using an existing tokenHash table create a header struction.
+Using an existing tokenHash table create a header structure.
 .EXAMPLE 
 $perToken = "<Personal_Access_Token>"
-$heasers = SetADOAuthHeaders -curHeader $existingHeaders -pat $perToken
+$heasers = Set-ADOAuthHeaders -curHeader $existingHeaders -pat $perToken
 
 Update an existing header structure with a new Personal Access Token
 

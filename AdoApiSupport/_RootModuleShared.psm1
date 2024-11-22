@@ -1,10 +1,12 @@
 Export-ModuleMember -Function Add-ADOLinkItem
 Export-ModuleMember -Function Get-ADOContext
+Export-ModuleMember -Function Get-ADOCommit
 Export-ModuleMember -Function Get-ADOOperationJSON
 Export-ModuleMember -Function Get-ADOOrganizationBaseUrl
 Export-ModuleMember -Function Get-ADOProcessTemplates
 Export-ModuleMember -Function Get-ADOProjectId
 Export-ModuleMember -Function Get-ADOProjects
+Export-ModuleMember -Function Get-ADORepository
 Export-ModuleMember -Function Get-ADOUrl
 Export-ModuleMember -Function Get-GitItems
 Export-ModuleMember -Function Get-PageStatsFromCSV
@@ -27,7 +29,8 @@ Export-ModuleMember -Function Remove-Repo
 Export-ModuleMember -Function Remove-Wiki
 Export-ModuleMember -Function Set-ADOAuthHeaders
 Export-ModuleMember -Function Set-ADOGlobals
-Export-ModuleMenber -Function Update-WikiPage
+Export-ModuleMember -Function Update-WikiPage
+Export-ModuleMember -Function Update-ADOWorkItem
 Export-ModuleMember -Function Write-DebugInfo
 Export-ModuleMember -Function Write-DebugObject
 

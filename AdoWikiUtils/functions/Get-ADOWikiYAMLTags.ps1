@@ -152,8 +152,21 @@ function Get-AdoWikiYAMLtags {
     else {
         $local_headers = $Context.Headers
     }
-    $articleList = Get-WikiFolderDocs -wikiUri $wikiUri -wikiPageFullUrl $wikiPageFullUrl -pageId $pageId -headers $local_headers -basePath $basePath -recursionLevel $recursionLevel -apiVersion $apiVersion -includeContent $includeContent
-    Write-DebugInfo -ForegroundColor DarkCyan "Get-WikiPageList -> + "$articleList.Count
+    #
+    # If the $wikiPageFullUrl has a value, assume that this is the only article to check for 
+    # YAML tags and return a page object that contains the YAML tag info
+    #
+    if( $wikiPageFullUrl.Length -gt 0 )
+    {
+        $articleList = @()
+        $resItem =  Get-WikiPage -wikiPageFullUrl $wikiPageFullUrl -headers $local_headers -includeContent $true
+        $articleList = $articleList + $wikiPageFullUrl
+
+    } else {
+        $articleList = Get-WikiFolderDocs -wikiUri $wikiUri -wikiPageFullUrl $wikiPageFullUrl -pageId $pageId -headers $local_headers -basePath $basePath -recursionLevel $recursionLevel -apiVersion $apiVersion -includeContent $includeContent
+        Write-DebugInfo -ForegroundColor DarkCyan "Get-WikiPageList -> + "$articleList.Count
+    }
+
     $wikiPageList = @()
     foreach ($item in $articleList) {
         $resItem = Get-WikiPage -wikiPageFullUrl $item -headers $local_headers -includeContent $true
@@ -216,7 +229,7 @@ function Get-AdoWikiYAMLtags {
         $retItem | Add-Member -Name "path" -Type NoteProperty -Value $resItem.path
         $retItem | Add-Member -Name "url" -Type NoteProperty -Value $resItem.url
         $retItem | Add-Member -Name "gitItemPath" -Type NoteProperty -Value $resItem.gitItemPath
-        $retItem | Add-Member -Name "Tags" -Type NoteProperty -Value $YAMLBlock
+        $retItem | Add-Member -Name "YAMLTags" -Type NoteProperty -Value $YAMLBlock
         $retItem | Add-Member -Name "Reviewer" -Type NoteProperty -Value ""
         $retItem | Add-Member -Name "Review Date" -Type NoteProperty -Value ""
         #

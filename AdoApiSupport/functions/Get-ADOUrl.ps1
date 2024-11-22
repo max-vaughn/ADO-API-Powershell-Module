@@ -52,13 +52,13 @@ Full API endpoint URL for the workitem that will have a link added to it
 .EXAMPLE
 $perTok = "<Personal_Access_Token"
 $headers = Set-ADOAuthHeaders -pat $perTok
-$areaUrl = Get-ADOURL -header $headers -organiaztion "IdentityCommunities"
+$areaUrl = Get-ADOURL -header $headers -organzation "IdentityCommunities"
 
 
 .NOTES
-General notes
+General note 
 #>
-function Get-ADOURL {
+function Get-ADOUrl {
     param (
         [string]$orgUrl = $null,
         [string]$organization = $null,
@@ -67,7 +67,7 @@ function Get-ADOURL {
     )
     if( ($null -eq $orgUrl) -and ($null -eq $organization )) 
     {
-        $dbgError = "orgUrl and organization paramerters are both null.  Must have either a orgUrl or an oganization to successfully execute this cmdlet"
+        $dbgError = "orgUrl and organization parameters are both null.  Must have either a orgUrl or an organization to successfully execute this cmdlet"
         throw $dbgError
     }
     if( $orgUrl.Length -gt 0 ) 
