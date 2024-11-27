@@ -67,11 +67,15 @@ Description = 'Ado Wiki Api Utilities, dependant on AdoApiSupport module'
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules     = @(
-    ".\functions\Get-ADOWikiYAMLtags.ps1"
+    ".\functions\Get-ADOWikiYAMLtags.ps1",
+    ".\functions\Get-YAMLBLock.ps1",
+    ".\functions\Remove-YAMLTags.ps1"
 )
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
-    "Get-ADOWikiYAMLtags"
+    "Get-ADOWikiYAMLtags",
+    "Get-YAMLBlock",
+    "Remove-YAMLTags"
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

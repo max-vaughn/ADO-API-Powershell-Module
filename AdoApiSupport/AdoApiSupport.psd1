@@ -102,7 +102,7 @@
         ".\functions\Set-ADOAuthHeaders.ps1",
         ".\functions\Set-ADOGlobals.ps1",
         ".\functions\Update-WikiPage.ps1",
-        ".\functions\Update-ADOWorkItem.ps1"
+        ".\functions\Update-ADOWorkItem.ps1",
         ".\functions\Write-DebugInfo.ps1",
         ".\functions\Write-DebugObject.ps1"
     )

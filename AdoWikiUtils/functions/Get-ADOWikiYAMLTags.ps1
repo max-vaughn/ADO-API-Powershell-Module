@@ -159,7 +159,7 @@ function Get-AdoWikiYAMLtags {
     if( $wikiPageFullUrl.Length -gt 0 )
     {
         $articleList = @()
-        $resItem =  Get-WikiPage -wikiPageFullUrl $wikiPageFullUrl -headers $local_headers -includeContent $true
+        #$resItem =  Get-WikiPage -wikiPageFullUrl $wikiPageFullUrl -headers $local_headers -includeContent $true
         $articleList = $articleList + $wikiPageFullUrl
 
     } else {

@@ -180,8 +180,11 @@ function Update-WikiPage  {
     # Build the body of post call
     #
     $body = "{
-          `"Content`": `"$Content`"
+          `"content`": `"$Content`"
         }"
+        $body = @{
+            "content" = $Content
+        } | ConvertTo-Json
     $results = Invoke-RestMethod -Method PATCH -Uri $wikiPage -Headers $callHeaders -ResponseHeadersVariable resHeaders -Body $body -ContentType "application/json"
     $outStr = write-output $results
     $dbgString = [string]::Format("Update-WikiPage -> Results:{0}", $outStr)
