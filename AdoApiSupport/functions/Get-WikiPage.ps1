@@ -27,7 +27,7 @@ function Get-WikiPage {
         # full page url like
         #  https://supportability.visualstudio.com/f3a37cb5-3492-4581-8dbd-f3381f2b1736/_apis/wiki/wikis/cdffcfd7-d961-4bdd-b53b-2759c05108d2/pages/%2FGeneralPages%2FAzure
         #
-        if( $wikiPageFullUrl.IndexOf("?") -gt 0 ){
+        if ( $wikiPageFullUrl.IndexOf("?") -gt 0 ) {
             #
             # Check to see if this is a call from Get-WikiPageList, it will have a ?Path parameter 
             # so we want to use &'s to connect the parameters
@@ -54,35 +54,44 @@ function Get-WikiPage {
     #
     $dbgString = [string]::Format("Get-WikiPage -> {0}", $wikiPage)
     Write-DebugInfo -ForegroundColor DarkCyan $dbgString
-    $results = Invoke-RestMethod -Uri $wikiPage -Headers $headers -ResponseHeadersVariable retH
-    if( $null -eq $returnHeaders ){
-        $returnHeaders = new-object psobject
+    try {
+        $results = Invoke-RestMethod -Uri $wikiPage -Headers $headers -ResponseHeadersVariable retH
+        if ( $null -eq $returnHeaders ) {
+            $returnHeaders = new-object psobject
+        }
+        $returnHeaders | add-member NoteProperty returnHeaders $retH
+        $outStr = write-output $results
+        $dbgString = [string]::Format("Get-WikiPage -> Results:{0}", $outStr)
+        Write-DebugInfo $dbgString -ForegroundColor DarkCyan
+        if ( $returnPageObject -eq $true ) {
+            #
+            # Build PageId reference URL and add it to the output
+            #
+            $pageUrl = $results.remoteUrl
+            $lastSlash = $pageUrl.LastIndexOf("/")
+            $pageUrl = $pageUrl.SubString(0, $lastSlash)
+            $pageUrl = [string]::Format("{0}?pageID={1}", $pageUrl, $results.id)
+            #
+            # Create the return item object
+            #
+            $retItem = new-object PSObject
+            $retItem | Add-Member -Name "pageID" -Type NoteProperty -Value $results.id
+            $retItem | Add-Member -Name "pageUrl" -Type NoteProperty -Value $pageUrl
+            $retItem | Add-Member -Name "path" -Type NoteProperty -Value $results.path
+            $retItem | Add-Member -Name "url" -Type NoteProperty -Value $results.url
+            $retItem | Add-Member -Name "gitItemPath" -Type NoteProperty -Value $results.gitItemPath
+            $retItem | Add-Member -Name "remoteUrl" -Type NoteProperty -Value $result.remoteUrl
+            $retItem | Add-Member -Name "Reviewer" -Type NoteProperty -Value ""
+            $retItem | Add-Member -Name "Review Date" -Type NoteProperty -Value ""
+            $results = $retItem
+        }
     }
-    $returnHeaders | add-member NoteProperty returnHeaders $retH
-    $outStr = write-output $results
-    $dbgString = [string]::Format("Get-WikiPage -> Results:{0}", $outStr)
-    Write-DebugInfo $dbgString -ForegroundColor DarkCyan
-    if( $returnPageObject -eq $true ){
-                #
-        # Build PageId reference URL and add it to the output
-        #
-        $pageUrl = $results.remoteUrl
-        $lastSlash = $pageUrl.LastIndexOf("/")
-        $pageUrl = $pageUrl.SubString(0, $lastSlash)
-        $pageUrl = [string]::Format("{0}?pageID={1}", $pageUrl, $results.id)
-        #
-        # Create the return item object
-        #
-        $retItem = new-object PSObject
-        $retItem | Add-Member -Name "pageID" -Type NoteProperty -Value $results.id
-        $retItem | Add-Member -Name "pageUrl" -Type NoteProperty -Value $pageUrl
-        $retItem | Add-Member -Name "path" -Type NoteProperty -Value $results.path
-        $retItem | Add-Member -Name "url" -Type NoteProperty -Value $results.url
-        $retItem | Add-Member -Name "gitItemPath" -Type NoteProperty -Value $results.gitItemPath
-        $retItem | Add-Member -Name "remoteUrl" -Type NoteProperty -Value $result.remoteUrl
-        $retItem | Add-Member -Name "Reviewer" -Type NoteProperty -Value ""
-        $retItem | Add-Member -Name "Review Date" -Type NoteProperty -Value ""
-        $results = $retItem
+    catch {
+        Write-Host "An error occurred: $_"
+        return $null
+    }
+    finally {
+        <#Do this after the try block regardless of whether an exception occurred or not#>
     }
     return $results
 }

@@ -23,6 +23,7 @@ Export-ModuleMember -Function Get-WorkItemById
 Export-ModuleMember -Function Invoke-RestMethodWithPaging
 Export-ModuleMember -Function New-ADOCreateOperation
 Export-ModuleMember -Function New-ADOWorkItem
+Export-ModuleMember -Function New-ADOWorkItemComment
 Export-ModuleMember -Function New-ReplacementItem
 Export-ModuleMember -Function New-WorkItemsFromWikiPages
 Export-ModuleMember -Function Remove-Repo

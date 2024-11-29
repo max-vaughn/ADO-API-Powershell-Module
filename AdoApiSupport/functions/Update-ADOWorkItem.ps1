@@ -116,10 +116,19 @@ function Update-ADOWorkItem {
    #
    # Now we have a requestUrl, lets add the query parameters
    #
-   $body = Get-ADOOperationJSON -operations $operations
-   $requestURL = [string]::Format("{0}?{1}", $requestURL, $apiVersion)
-   $dbgString = [string]::Format("Get-WorkItemById -> requestURL: {0}", $requestURL)
-   Write-DebugInfo $dbgString -ForegroundColor DarkBlue
-   $results = Invoke-RestMethod -Method PATCH -ContentType "application/json-patch+json" -Uri $requestURL -Headers $headers -Body $body
+   try {
+      $body = Get-ADOOperationJSON -operations $operations
+      $requestURL = [string]::Format("{0}?{1}", $requestURL, $apiVersion)
+      $dbgString = [string]::Format("Get-WorkItemById -> requestURL: {0}", $requestURL)
+      Write-DebugInfo $dbgString -ForegroundColor DarkBlue
+      $results = Invoke-RestMethod -Method PATCH -ContentType "application/json-patch+json" -Uri $requestURL -Headers $headers -Body $body
+   }
+   catch {
+      Write-Host "An error occurred: $_"
+      return $null
+   }
+   finally {
+      <#Do this after the try block regardless of whether an exception occurred or not#>
+   }
    return $results
 }

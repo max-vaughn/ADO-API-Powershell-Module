@@ -138,19 +138,22 @@ function Get-AdoWikiYAMLtags {
         [bool] $useContextHeaders = $false,
         [string]  $wikiUri = "",
         [string]  $wikiPageFullUrl = "",
+        [string]  $pageId = "",
         [hashtable] $headers,
         [string] $accept = "",
         [string] $basePath = "",
         [ValidateSet( "none", "oneLevel", "full", "oneLevelPlusNestedEmptyFolders")]
         [string] $recursionLevel = "none",
         [string] $apiVersion = "api-version=6.0-preview.1",
-        [bool]$includeContent = $false
+        [bool]$includeContent = $true
     )
+    $articleList = @()
     if( $null -eq $Context){
         $local_headers = $headers
     }
     else {
-        $local_headers = $Context.Headers
+        $local_headers = $Context.Headers.Clone()
+        $wikiUri = $Context.WikiInfo.Value[$wikiOrdinal].url
     }
     #
     # If the $wikiPageFullUrl has a value, assume that this is the only article to check for 
@@ -158,13 +161,16 @@ function Get-AdoWikiYAMLtags {
     #
     if( $wikiPageFullUrl.Length -gt 0 )
     {
-        $articleList = @()
+
         #$resItem =  Get-WikiPage -wikiPageFullUrl $wikiPageFullUrl -headers $local_headers -includeContent $true
         $articleList = $articleList + $wikiPageFullUrl
 
+    } elseIf ($pageID.Length -gt 0){
+        $wikiPageFullUrl = [string]::Format("{0}/pages/{1}?recursionLevel={2}&includeContent={3}&{4}", $wikiUri, $pageId, $recursionLevel, $includeContent.ToString(), $apiVersion)
+        $articleList = $articleList + $wikiPageFullUrl
     } else {
         $articleList = Get-WikiFolderDocs -wikiUri $wikiUri -wikiPageFullUrl $wikiPageFullUrl -pageId $pageId -headers $local_headers -basePath $basePath -recursionLevel $recursionLevel -apiVersion $apiVersion -includeContent $includeContent
-        Write-DebugInfo -ForegroundColor DarkCyan "Get-WikiPageList -> + "$articleList.Count
+        Write-DebugInfo -ForegroundColor DarkCyan "Get-WikiPageList -> + " $articleList.Count
     }
 
     $wikiPageList = @()

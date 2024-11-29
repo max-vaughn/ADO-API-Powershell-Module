@@ -1,5 +1,5 @@
 param (
-    [string] $pertok = "5jBL9andFakkXeVmjbSCO6T0PDKnVa8mozfVi8gm2suoR05GGao7JQQJ99AKACAAAAAAArohAAASAZDO2Qte",
+    [string] $pertok = "",
     #[string] $PathVar = "GeneralPages/AAD/AAD%20Account%20Management/AAD%20Government%20Troubleshooting/TSG%3A%20Password%20Reset%20Requests%20for%20Azure%20Government%20Tenants",
     [string] $InputData = 'C:\temp\data\beckworkitemsout.csv',
     [string] $OutData = 'C:\temp\data\beckworkitemsouttask.csv',

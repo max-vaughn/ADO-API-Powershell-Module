@@ -103,6 +103,7 @@ function Update-WikiPage  {
     # may add checks later to make sure its the correct endpoint.
     #  
     $wikiPage = ""
+    $callHeaders = $null
     $callHeaders = $headers
     if( $wikiPageFullUrl.Length -gt 0 ){
         $wikiPage = [string]::Format("{0}?&{1}", $wikiPageFullUrl, $apiVersion)
@@ -121,7 +122,7 @@ function Update-WikiPage  {
         }
     } 
     #
-    # If the target wiki page url ( wikiPage vairable) has 0 length,
+    # If the target wiki page url ( wikiPage variable) has 0 length,
     # we need to build the full page url based on the adoContext, pageID
     # and possibly the wikiUri
     # 
@@ -155,7 +156,8 @@ function Update-WikiPage  {
             # and the provided pageId
             #
             $wikiPage = [string]::Format("{0}/pages/{1}?&{2}",$adoContext.WikiInfo.value[$wikiOrdinal].url, $pageId, $apiVersion)
-            $callHeaders = $adoContext.Headers
+            $callHeaders = $null
+            $callHeaders = $adoContext.Headers.Clone()
            if( $ETag.Length -gt 0 ){
                 #
                 # we have a possible version value, add the appropriate header
@@ -185,9 +187,18 @@ function Update-WikiPage  {
         $body = @{
             "content" = $Content
         } | ConvertTo-Json
-    $results = Invoke-RestMethod -Method PATCH -Uri $wikiPage -Headers $callHeaders -ResponseHeadersVariable resHeaders -Body $body -ContentType "application/json"
-    $outStr = write-output $results
-    $dbgString = [string]::Format("Update-WikiPage -> Results:{0}", $outStr)
-    Write-DebugInfo $dbgString -ForegroundColor DarkYellow
+    try {
+        $results = Invoke-RestMethod -Method PATCH -Uri $wikiPage -Headers $callHeaders -ResponseHeadersVariable resHeaders -Body $body -ContentType "application/json"
+        $outStr = write-output $results
+        $dbgString = [string]::Format("Update-WikiPage -> Results:{0}", $outStr)
+        Write-DebugInfo $dbgString -ForegroundColor DarkYellow
+    }
+    catch {
+        Write-Host "An error occurred: $_"
+        return $null
+    }
+    finally {
+        <#Do this after the try block regardless of whether an exception occurred or not#>
+    }
     return $results
 }
