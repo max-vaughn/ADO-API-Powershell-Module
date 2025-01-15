@@ -34,11 +34,19 @@ Function Get-WikiPageList {
         $pageUrl = $pageUrl.SubString(0, $lastSlash)
         $pageUrl = [string]::Format("{0}?pageID={1}", $pageUrl, $resItem.id)
         #
+        # Create the API Page URL that can be used as a base
+        # URL for the page when calling wiki APIs
+        #
+        $FindPages = "/pages/"
+        $pagesLoc = $resItem.url.LastIndexOf($findPages) + $FindPages.Length
+        $pageApiUrl = $resItem.url.SubString(0, $pagesLoc)
+        $pageApiUrl = [string]::Format("{0}{1}", $pageAPIUrl, $resItem.id)
+        #
         # Create the return item object
         #
-
         $retItem | Add-Member -Name "pageID" -Type NoteProperty -Value $resItem.id
         $retItem | Add-Member -Name "pageUrl" -Type NoteProperty -Value $pageUrl
+        $retItem | Add-Member -Name "pageApiUrl" -Type NoteProperty -Value $pageApiUrl
         $retItem | Add-Member -Name "path" -Type NoteProperty -Value $resItem.path
         $retItem | Add-Member -Name "url" -Type NoteProperty -Value $resItem.url
         $retItem | Add-Member -Name "gitItemPath" -Type NoteProperty -Value $resItem.gitItemPath

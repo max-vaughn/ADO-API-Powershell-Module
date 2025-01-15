@@ -72,10 +72,19 @@ function Get-WikiPage {
             $pageUrl = $pageUrl.SubString(0, $lastSlash)
             $pageUrl = [string]::Format("{0}?pageID={1}", $pageUrl, $results.id)
             #
+            # Create the API Page URL that can be used as a base
+            # URL for the page.
+            #
+            $FindPages = "/pages/"
+            $pagesLoc = $results.url.LastIndexOf($findPages) + $FindPages.Length
+            $pageApiUrl = $results.url.SubString(0,$pagesLoc)
+            $pageApiUrl = [string]::Format("{0}{1}", $pageAPIUrl, $results.id)
+            #
             # Create the return item object
             #
             $retItem = new-object PSObject
             $retItem | Add-Member -Name "pageID" -Type NoteProperty -Value $results.id
+            $retItem | Add-Member -Name "pageApiUrl" -Type NoteProperty -Value $pageApiUrl            
             $retItem | Add-Member -Name "pageUrl" -Type NoteProperty -Value $pageUrl
             $retItem | Add-Member -Name "path" -Type NoteProperty -Value $results.path
             $retItem | Add-Member -Name "url" -Type NoteProperty -Value $results.url
